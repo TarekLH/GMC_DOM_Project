@@ -240,11 +240,12 @@ let displayHideCart = () => {
 
 let deleteProduct = (id) => { 
     selectedItem = id
-    //console.log(selectedItem.id)
     panier = panier.filter((x) => x.id !== selectedItem.id)
     generateCartShop()
     totalAmount()
-    //update(id)
+    redIcon()
+    update()
+    
     
 }
 
@@ -253,7 +254,7 @@ let deleteProduct = (id) => {
 //calcule de la note total a payer 
 
 let totalAmount = () => {
-    if (panier.length > 0) {
+    if (panier.length >= 0) {
         let totalBill = panier
             .map((x) => {
                 let {id, item} = x;
