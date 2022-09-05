@@ -215,7 +215,8 @@ let update = (id) => {
     let search = panier.find((x) => x.id === selectedItem.id )
 
     //on inject a la div (chagee d'afficher la quantite) le nbr de produit selectionne qui se trouve dans le tab panier
-    selectedItem.innerHTML = search.item
+    selectedItem.innerHTML = search.item    
+
 };
 
 
@@ -244,9 +245,7 @@ let deleteProduct = (id) => {
     generateCartShop()
     totalAmount()
     redIcon()
-    update()
-    
-    
+    selectedItem.innerHTML = "0"
 }
 
 
