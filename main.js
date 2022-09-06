@@ -171,7 +171,9 @@ let decrement = (id) => {
 
     totalAmount()
 
-    panier = panier.filter((x) => x.item !== 0)
+
+    panier = panier.filter((x) => x.item !== 0) //on return uniquement les elements de panier dont l'item est > 0
+    //on genere le cartshop uniquement pour les elements de panier dont l'item est > 0
     generateCartShop()
     
 };
@@ -188,7 +190,7 @@ let generateCartShop = () => {
         let {id, item } = x 
 
         //on cherche la correspondance d'id des produits, entre le tableau panier et le tableau data, pour return l'affichage (titre, img, desc...) correspondant.
-        let search = shopItemsD.find((y) => y.id === id ) 
+        let search = shopItemsD.find((y) => y.id === id ) //on return l'element de shopItemsD dont l'id est egal a l'id de l'element se trouavnt dans panier.
         return `
             <div class="itemCards" id="cartItem-${id}">
                 <img width="185" height="70" src="${search.img}" alt="img">
@@ -200,7 +202,7 @@ let generateCartShop = () => {
         `
     })
 
-    //on supprime le bug d'affichage du return litteral (`)
+    //on supprime l'affichage du return litteral (`)
     .join(""))
         
 }
@@ -211,10 +213,11 @@ let generateCartShop = () => {
 let update = (id) => {
     let selectedItem = id
 
-    //on cherche le correspondance des ids entre le tab panier et tab de data
+    //on cherche la correspondance des ids entre le tab panier et tab de data
+    //on return l'element de panier dont l'id est egal a l'id de la div.quantite
     let search = panier.find((x) => x.id === selectedItem.id )
 
-    //on inject a la div (chagee d'afficher la quantite) le nbr de produit selectionne qui se trouve dans le tab panier
+    //on inject a la div.quantite le nbr de produit selectionne qui se trouve dans le tab panier
     selectedItem.innerHTML = search.item    
 
 };
@@ -224,6 +227,7 @@ let update = (id) => {
 
 let redIcon = () => {
     let Icon = document.getElementById("cart-icon-amount")
+    //on map panier pour return la valeur de item et faire la somme.
     Icon.innerHTML = panier.map( (x) => x.item).reduce((prevNbr,nextNbr) => prevNbr + nextNbr, 0 )
 }
 
@@ -235,14 +239,13 @@ let displayHideCart = () => {
     } else {
         cart.style.display = "block"
     }
-    //console.log("hello")
 }
 
 
 let deleteProduct = (id) => { 
     selectedItem = id
-    panier = panier.filter((x) => x.id !== selectedItem.id)
-    generateCartShop()
+    panier = panier.filter((x) => x.id !== selectedItem.id) //on contre-dit la condition de la variable search et donc (search == undefined)
+    generateCartShop() // search == undefined
     totalAmount()
     redIcon()
     selectedItem.innerHTML = "0"
@@ -263,7 +266,6 @@ let totalAmount = () => {
 
             //on fait la somme des valeurs (qu'a return la methode .map() dans un tableau)
             .reduce((x,y) => x + y, 0)
-        //console.log(totalBill)
 
         //on inject le resultat dans la span chargee d'afficher la note totale
         billSpan.innerHTML = `$ ${totalBill}`
